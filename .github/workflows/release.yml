@@ -5,6 +5,13 @@ on:
       - main
       - beta
 
+permissions:
+  deployments: write
+  contents: write
+  statuses: write
+  actions: write
+  checks: read
+
 jobs:
   release:
     name: Release
@@ -22,6 +29,8 @@ jobs:
           node-version: '18'
         
       - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm i -G semantic-release @semantic-release/npm @semantic-release/git
           npx semantic-release
